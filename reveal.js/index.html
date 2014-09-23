@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>SPA</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Single Page Web Applications</h1>
+					<p>
+						<h4>By Anuja Joshi</h4>
+					</p>
+				</section>
+
+				<section>
+					<h2>What is Single Page Web Apps (SPA)</h2>
+					<ul>
+						<li>Web applications that fits on single web page </li>
+						<li>Provide more fluid user experience similar to desktop application</li>
+						<li>No full page reloads</li>
+						<li>No control transfer to another page </li>
+						<li>Server interaction only using XHR</li>
+					</ul>
+
+					<aside class="notes">
+						basic idea
+					</aside>
+				</section>
+
+				<section>
+					<section>
+						<h2>Traditional  Approach</h2>
+						<div>
+        			<img src="assets/img/history2.png" >
+        			<img src="assets/img/history1.png" style=" float: left; margin-bottom: 15px; margin-right: 3px;">
+        		</div>
+					</section>
+				</section>
+
+
+
+				<section>
+					<h2> SPA Approach</h2>
+        	<div><img src="assets/img/today.png">
+
+        		<ul>
+							<li>  No full page reloads </li>
+							<li>  No control transfer to another page </li>
+							<li>  Server interaction only using XHR </li>
+						</ul>
+
+			  	</div>
+				</section>
+
+				<section>
+					<h2> Architecture</h2>
+          <div><img src="assets/img/architecture.jpg"></div>
+				</section>
+
+
+				<section>
+					<h2>Single Page Web Apps typically have</h2>
+					<ul>
+						<li>Fluid transitions between page states</li>
+						<li>Dynamic data loading from server-side API</li>
+						<li>Back/Forward Button works as expected</li>
+						<li>More javascript than actual HTML</li>
+						<li>Ability to go offline</li>
+						<li>URL hashes are used to track state and provide bookmark-able links</li>
+					</ul>
+
+					<aside class="notes">
+						in deep
+					</aside>
+				</section>
+
+				<!-- Example of nested vertical slides -->
+
+
+				<section>
+					<h2>Core Benefits - Performance Improvement</h2>
+					<ul>
+						<li>Less data transfer: XHR calls only send</li>
+						<li>Uses less network bandwidth</li>
+						<li>Raw data, not HTML markup</li>
+						<li>Load Distribution: less load on your server, by distributing it to clients</li>
+						<li>Caching gets a lot easier and more 	beneficial</li>
+					</ul>
+
+					<aside class="notes">
+						in deep
+					</aside>
+				</section>
+
+				<section>
+					<h2>SPA Benefits</h2>
+					<ul>
+						<li>Its an application so it can do cool stuff!</li>
+						<li>Responsive, native application feel. No page flicker</li>
+						<li>Faster UI, more Interactive</li>
+						<li>Support multiple platforms</li>
+						<li>Super duper farameworks</li>
+					</ul>
+
+					<aside class="notes">
+						in deep
+					</aside>
+				</section>
+
+				<section>
+					<h3>Building single page web apps</h3>
+
+					<ul>
+						<li><b><font color="#F5DEB3">Choosing the right tool/framework for the back-end service/API:</font></b><br> ROR, ASP.NET MVC  etc,</li>
+						<br>
+						<li><b><font color="#F5DEB3">Choosing the right library/framework for the client part of the application:</font></b> <br>Batman.js, Backbone.js, Knockout.js, Angular.js, Ember.js</li>
+					</ul>
+				</section>
+
+
+
+
+				<section>
+					<h2>client-side view </h2>
+					<pre><code data-trim contenteditable>
+< tr ng-repeat="performer in performers">
+	<td>{{performer.name}}</td>
+	<td>{{performer.email}}</td>
+	<td>{{performer.age}}</td>
+	<td>{{performer.art}}</td>
+< /tr>
+
+					</code></pre>
+
+				</section>
+
+				<section>
+					<h2>Factory for performers</h2>
+					<pre><code data-trim contenteditable>
+
+myApp.factory('Performers', ['$resource',function($resource){
+  return $resource('/performers.json', {},{
+    query: { method: 'GET', isArray: true },
+    create: { method: 'POST' }
+  })
+}]);
+
+					</code></pre>
+
+				</section>
+
+
+
+				<section>
+					<h2>controller for listing entries </h2>
+					<pre><code data-trim contenteditable>
+
+myApp.controller("PerformerListCtr", ['$scope', 'Performers',
+ function($scope, Performers) {
+
+  $scope.performers = Performers.query();
+
+}]);
+
+					</code></pre>
+
+				</section>
+
+
+				<section>
+					<h2>routing </h2>
+					<pre><code data-trim contenteditable>
+
+myApp.config([
+  '$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+    $routeProvider.when('/performers',{
+      templateUrl: '/templates/performers/index.html',
+      controller: 'PerformerListCtr'
+    });
+    $routeProvider.when('/performers/new',{
+      templateUrl: '/templates/performers/new.html',
+      controller: 'PerformerAddCtr'
+    });
+    $routeProvider.otherwise({
+      redirectTo: '/performers'
+    });
+  }
+]);
+
+					</code></pre>
+
+				</section>
+
+
+				<section>
+					<h2>server side index method </h2>
+					<pre><code data-trim contenteditable>
+def index
+  @performer = Performer.all
+  respond_with(@performer) do |format|
+    format.json { render :json => @performer.as_json }
+    format.html
+  end
+end
+					</code></pre>
+
+				</section>
+
+
+				<section>
+					<h3>Challenges</h3>
+					<ul>
+						<li> URLs</li>
+						<li> Search engine optimization</li>
+						<li> first page load slow </li>
+						<li> lack of error tracking</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Worth trouble?</h3>
+					<ul>
+						<li> Better user experiance</li>
+						<li> Efficient utilization of available resources </li>
+						<li> Good impression</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3> Thank you! </h3>
+				</section>
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
